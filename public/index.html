@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DualAudio Hub - Virtual Audio Cable & Dual-Bluetooth Streamer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>DUALAUDIO <span>HUB</span></h1>
+                    <p class="tagline">Single Virtual Audio Input ➔ Dual Bluetooth Simultaneous Streamer</p>
+                </div>
+            </div>
+
+            <div class="header-status">
+                <div class="status-pill" id="engineStatusPill">
+                    <span class="status-dot"></span>
+                    <span class="status-label">ENGINE IDLE</span>
+                </div>
+                <button class="btn btn-outline" id="btnRefresh" title="Rescan devices">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                    <span>Rescan</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Signal Routing Flow Banner -->
+        <section class="routing-visualizer">
+            <div class="routing-node" id="visualSource">
+                <span class="node-icon">🔀</span>
+                <div class="node-info">
+                    <span class="node-type">SINGLE VIRTUAL MEDIUM</span>
+                    <strong class="node-name" id="visSourceName">Virtual Audio Source</strong>
+                </div>
+            </div>
+
+            <div class="routing-line">
+                <div class="pulse-beam"></div>
+                <span class="flow-badge">Direct Live Stream (0ms)</span>
+            </div>
+
+            <div class="routing-split">
+                <div class="routing-branch branch-1">
+                    <span class="branch-wire"></span>
+                    <div class="routing-node branch-node" id="visualTgt1">
+                        <span class="node-icon">🎧</span>
+                        <div class="node-info">
+                            <span class="node-type">BLUETOOTH 1</span>
+                            <strong class="node-name" id="visTgt1Name">Dubstep Pop 1200/1210</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="routing-branch branch-2">
+                    <span class="branch-wire"></span>
+                    <div class="routing-node branch-node" id="visualTgt2">
+                        <span class="node-icon">🎧</span>
+                        <div class="node-info">
+                            <span class="node-type">BLUETOOTH 2</span>
+                            <strong class="node-name" id="visTgt2Name">Superpods</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Workspace Grid -->
+        <main class="main-grid">
+            <!-- Left: Single Virtual Medium Input -->
+            <section class="panel card source-card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <span class="card-tag">STEP 1: SELECT VIRTUAL MEDIUM</span>
+                        <h2>Single Audio Input Source</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="description">Select the single audio source that takes your PC sound. Once Virtual Cable is selected, Windows routes all sound to it without playing on speakers.</p>
+                    
+                    <div class="form-group">
+                        <label for="selectSource">Audio Source Device</label>
+                        <select id="selectSource" class="select-input">
+                            <option value="default">★ Windows Default Audio (Loopback)</option>
+                        </select>
+                    </div>
+
+                    <!-- Live VU Meter -->
+                    <div class="vu-meter-section">
+                        <div class="meter-header">
+                            <span>LIVE STEREO AUDIO SIGNAL</span>
+                            <span class="meter-db" id="peakDbText">-inf dB</span>
+                        </div>
+                        <div class="stereo-meter-bars">
+                            <div class="meter-channel">
+                                <span class="ch-label">L</span>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="meterFillL"></div>
+                                </div>
+                            </div>
+                            <div class="meter-channel">
+                                <span class="ch-label">R</span>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="meterFillR"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simple 3-step Instructions -->
+                    <div class="quick-steps-box">
+                        <div class="q-step"><strong>1.</strong> In Windows Sound menu, select your <strong>Virtual Cable</strong> (or Speakers).</div>
+                        <div class="q-step"><strong>2.</strong> Select your <strong>two Bluetooth devices</strong> below.</div>
+                        <div class="q-step"><strong>3.</strong> Click <strong>START LIVE DUAL AUDIO</strong>!</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right: Dual Bluetooth Targets -->
+            <section class="panel card targets-card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <span class="card-tag">STEP 2: SELECT DUAL BLUETOOTH DESTINATIONS</span>
+                        <h2>Both Bluetooth Audio Devices</h2>
+                    </div>
+                </div>
+
+                <div class="dual-targets-container">
+                    <!-- Bluetooth 1 -->
+                    <div class="target-subcard" id="cardTarget1">
+                        <div class="target-head">
+                            <div class="target-badge">
+                                <span class="bt-icon">🎧</span>
+                                <span class="target-num">FIRST BLUETOOTH DEVICE</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="selectTarget1">Bluetooth Headphone / Speaker 1</label>
+                            <select id="selectTarget1" class="select-input">
+                                <option value="">-- Select First Bluetooth Headphone --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Bluetooth 2 -->
+                    <div class="target-subcard" id="cardTarget2">
+                        <div class="target-head">
+                            <div class="target-badge">
+                                <span class="bt-icon">🎧</span>
+                                <span class="target-num">SECOND BLUETOOTH DEVICE</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="selectTarget2">Bluetooth Headphone / Speaker 2</label>
+                            <select id="selectTarget2" class="select-input">
+                                <option value="">-- Select Second Bluetooth Headphone --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Toggle Action Button -->
+                <div class="master-action-bar">
+                    <button class="btn-master-toggle" id="btnMasterToggle">
+                        <div class="toggle-content">
+                            <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span class="toggle-text" id="toggleButtonText">START LIVE DUAL AUDIO</span>
+                        </div>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Minimal Telemetry Footer -->
+        <footer class="telemetry-footer">
+            <div class="hud-item">
+                <span class="hud-label">STATUS</span>
+                <span class="hud-value text-green" id="hudStatus">READY</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">STREAMING ENGINE</span>
+                <span class="hud-value text-cyan">Direct Live PCM (Zero Delay)</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">FRAMES STREAMED</span>
+                <span class="hud-value" id="hudFrames">0</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
