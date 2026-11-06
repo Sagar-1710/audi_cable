@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DualAudio Hub — Play to two Bluetooth devices at once</title>
+    <meta name="description" content="DualAudio Hub streams one Windows audio source to two Bluetooth headphones or speakers simultaneously. WASAPI engine, per-device sync delay, portable exe for Windows 10 & 11.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="#top" class="brand">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                DUALAUDIO&nbsp;<span>HUB</span>
+            </a>
+            <a class="btn btn-small" href="https://github.com/Sagar-1710/audi_cable/releases/latest/download/DualAudioHub-Portable.exe">Download</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero" id="top">
+        <div class="container">
+            <p class="kicker">FOR WINDOWS 10 &amp; 11</p>
+            <h1>Your PC can't play to two<br>Bluetooth devices. <em>This fixes that.</em></h1>
+            <p class="sub">DualAudio Hub streams one audio source to two Bluetooth headphones or speakers at the same time — in real time, with per-device sync alignment and volume control.</p>
+            <div class="hero-actions">
+                <a class="btn btn-big" href="https://github.com/Sagar-1710/audi_cable/releases/latest/download/DualAudioHub-Portable.exe">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+                    Download for Windows
+                </a>
+                <a class="btn btn-ghost" href="#how">See how it works</a>
+            </div>
+            <p class="hero-note">Free · Portable exe · No installation required</p>
+        </div>
+    </header>
+
+    <!-- Screenshot -->
+    <section class="shot">
+        <div class="container">
+            <figure class="shot-frame">
+                <img src="assets/dashboard.png" alt="DualAudio Hub dashboard — signal routing from a single source to two Bluetooth headphones" width="1416" height="884">
+            </figure>
+            <p class="shot-caption">The dashboard — live signal routing, stereo VU metering, and per-device targets.</p>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" id="how">
+        <div class="container">
+            <p class="kicker">HOW IT WORKS</p>
+            <h2>One source in, two devices out</h2>
+
+            <div class="flow" aria-label="Signal flow: one source splitting to two Bluetooth devices">
+                <div class="flow-node">
+                    <span class="flow-tag">SOURCE</span>
+                    <strong>One audio stream</strong>
+                    <span class="flow-sub">loopback or virtual cable</span>
+                </div>
+                <div class="flow-wire" aria-hidden="true">
+                    <span class="flow-line"></span>
+                    <span class="flow-badge">WASAPI · real time</span>
+                </div>
+                <div class="flow-split">
+                    <div class="flow-node">
+                        <span class="flow-tag">OUT 1</span>
+                        <strong>🎧 Bluetooth device #1</strong>
+                    </div>
+                    <div class="flow-node">
+                        <span class="flow-tag">OUT 2</span>
+                        <strong>🎧 Bluetooth device #2</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modes">
+                <article class="card">
+                    <span class="card-tag">MODE 1</span>
+                    <h3>Direct Loopback</h3>
+                    <p>Captures whatever Windows is playing — no drivers, nothing to configure. Select it and hit start.</p>
+                </article>
+                <article class="card">
+                    <span class="card-tag">MODE 2</span>
+                    <h3>Virtual Cable</h3>
+                    <p>Route a single app — Spotify, Discord, a DAW — through a virtual cable and broadcast only that, while everything else stays on your speakers.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+        <div class="container">
+            <p class="kicker">FEATURES</p>
+            <h2>Built like pro audio gear</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Dual-Bluetooth broadcast</h3>
+                    <p>The identical stream, duplicated live to two devices.</p>
+                </div>
+                <div class="feature">
+                    <h3>Sync delay alignment</h3>
+                    <p>Millisecond offset per device kills echo between mismatched codecs (SBC / AAC / aptX).</p>
+                </div>
+                <div class="feature">
+                    <h3>Real-time resampling</h3>
+                    <p>48 kHz ↔ 44.1 kHz mismatches handled transparently.</p>
+                </div>
+                <div class="feature">
+                    <h3>Independent control</h3>
+                    <p>Per-device volume (0–200%) and mute, per-device delay.</p>
+                </div>
+                <div class="feature">
+                    <h3>Live VU metering</h3>
+                    <p>60 fps stereo peak meters in the dashboard — you see the signal.</p>
+                </div>
+                <div class="feature">
+                    <h3>CLI included</h3>
+                    <p>Headless scripting and automation via <code>DualAudioCli.ps1</code>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick start -->
+    <section class="section">
+        <div class="container">
+            <p class="kicker">QUICK START</p>
+            <h2>Running in under a minute</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-num">01</span>
+                    <h3>Download &amp; run</h3>
+                    <p>Portable exe — double-click it. No installer, no setup wizard.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">02</span>
+                    <h3>Pick your devices</h3>
+                    <p>Choose the audio source and your two Bluetooth headphones or speakers.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">03</span>
+                    <h3>Start streaming</h3>
+                    <p>Hit start. Hear a delay between devices? Nudge the sync offset until both are in phase.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA -->
+    <section class="section cta">
+        <div class="container">
+            <h2>Grab it. Run it. Pair it.</h2>
+            <p class="sub">Windows 10 / 11 · x64 · portable executable</p>
+            <a class="btn btn-big" href="https://github.com/Sagar-1710/audi_cable/releases/latest/download/DualAudioHub-Portable.exe">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+                Download DualAudio Hub
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span>DUALAUDIO <span class="cyan">HUB</span></span>
+            <span class="footer-note">Single Virtual Audio Input → Dual Bluetooth Simultaneous Streamer</span>
+            <span class="footer-note">VB-CABLE driver © VB-Audio, bundled under its license.</span>
+        </div>
+    </footer>
+
+</body>
+</html>
