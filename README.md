@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # DualAudio Hub (Virtual Audio Cable & Dual-Bluetooth Splitter)
 
 A modern, high-performance clone and successor to **Virtual Audio Cable (VAC)** designed to stream a **single virtual audio source** simultaneously to **two Bluetooth headphones or speakers** on Windows 10 & 11.
@@ -12,7 +11,7 @@ A modern, high-performance clone and successor to **Virtual Audio Cable (VAC)** 
   - **Direct Loopback Mode (Plug & Play)**: Captures master Windows audio without requiring any kernel drivers.
   - **Virtual Cable Mode (App Isolation)**: Routes isolated apps (Spotify, Discord, Chrome, DAWs) to the virtual cable and broadcasts them to both Bluetooth devices.
 - **Low-Latency WASAPI Engine**: Native C# WASAPI Core Audio streaming engine with lock-free buffering and sub-10ms internal latency.
-- **Real-Time Resampling**: Handles sample rate mismatches seamlessly (e.g. 48,000 Hz $\leftrightarrow$ 44,100 Hz).
+- **Real-Time Resampling**: Handles sample rate mismatches seamlessly (e.g. 48,000 Hz ↔ 44,100 Hz).
 - **Bluetooth Phase & Sync Delay Alignment**: Eliminates echo or desync between different Bluetooth headphone codecs (SBC vs AAC vs AptX) using live millisecond delay offset sliders.
 - **Independent Controls**: Per-device volume fader (0% - 200%) and mute toggles.
 - **Pro Audio Web Dashboard**: Cyberpunk / DAW aesthetic with 60fps stereo VU peak meters, signal routing flow diagrams, and quick presets.
@@ -23,15 +22,15 @@ A modern, high-performance clone and successor to **Virtual Audio Cable (VAC)** 
 ## 📁 Project Structure
 
 ```text
-d:\audi_cable\
+audi_cable\
 ├── DualAudioEngine.cs      # Core C# WASAPI repeater & routing engine
 ├── engine_host.ps1         # Background engine host and IPC controller
 ├── server.js               # Node.js local REST API server and static host
 ├── DualAudioCli.ps1        # Interactive command-line interface tool
 ├── Start-DualAudio.bat     # One-click Windows batch launcher
 ├── Start-DualAudio.ps1     # One-click PowerShell launcher
-├── VIRTUAL_CABLE_GUIDE.md  # Detailed VAC architecture and Bluetooth guide
 ├── README.md               # Documentation and quickstart
+├── website/                # Project showcase website (static HTML/CSS)
 └── public/
     ├── index.html          # Modern DAW-style Web Dashboard
     ├── style.css           # Styling with glassmorphism and animated meters
@@ -82,6 +81,3 @@ If you only want music (e.g. Spotify) to broadcast to both Bluetooth devices, wh
 2. In Windows: Go to **Settings > System > Sound > Volume mixer**.
 3. Under *Apps*, set the Output of Spotify (or browser) to your Virtual Cable.
 4. DualAudio Hub will now capture ONLY that app and duplicate it to both Bluetooth devices.
-=======
-# audi_cable
->>>>>>> 24845502fcf2768d565406467f36b9c2ec292b0f

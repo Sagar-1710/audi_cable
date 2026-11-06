@@ -9,7 +9,9 @@ const path = require('path');
 const { spawn, exec } = require('child_process');
 const url = require('url');
 
-const PORT = 40880;
+const BASE_PORT = 40880;
+const MAX_PORT_ATTEMPTS = 20;
+let activePort = BASE_PORT;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
 // When running inside Electron packaged app, engine scripts live in resourcesPath
@@ -194,9 +196,24 @@ const server = http.createServer(async (req, res) => {
 
 initEngineProcess();
 
-server.listen(PORT, '127.0.0.1', () => {
+// If the port is taken (leftover process, another app), fall back to the
+// next port instead of crashing the Electron main process with EADDRINUSE.
+server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE' && activePort < BASE_PORT + MAX_PORT_ATTEMPTS - 1) {
+        console.warn(`[DualAudio] Port ${activePort} is busy — trying ${activePort + 1}...`);
+        activePort += 1;
+        server.listen(activePort, '127.0.0.1');
+    } else if (err) {
+        console.error('[DualAudio] HTTP server error:', err.message);
+    }
+});
+
+server.listen(activePort, '127.0.0.1', () => {
     console.log(`======================================================`);
     console.log(` 🎧 DualAudio Hub (Virtual Audio Cable) Live!         `);
-    console.log(` Open Dashboard: http://127.0.0.1:${PORT}             `);
+    console.log(` Open Dashboard: http://127.0.0.1:${activePort}             `);
     console.log(`======================================================`);
 });
+
+// main.js reads the actually-bound port back
+module.exports = { getPort: () => activePort };

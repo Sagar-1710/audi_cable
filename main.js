@@ -11,20 +11,37 @@ const http = require('http');
 const isPackaged = app.isPackaged;
 const resourceBase = isPackaged ? process.resourcesPath : __dirname;
 
-// Inject resource path so server.js can find engine_host.ps1
-process.env.DUALAUDIO_RESOURCE_DIR = resourceBase;
+// ── Single instance lock ───────────────────────────────────────────────────
+// Launching the app twice used to crash with EADDRINUSE on port 40880.
+// Now a second launch just focuses the window of the running instance.
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+    app.quit();
+} else {
+    app.on('second-instance', () => {
+        if (mainWindow) {
+            mainWindow.show();
+            mainWindow.focus();
+        }
+    });
+}
 
-// ── Start the embedded HTTP server ─────────────────────────────────────────
-require('./server');
+// ── Start the embedded HTTP server (only if we own the lock) ───────────────
+let serverModule = null;
+if (gotTheLock) {
+    // Inject resource path so server.js can find engine_host.ps1
+    process.env.DUALAUDIO_RESOURCE_DIR = resourceBase;
+    serverModule = require('./server');
+}
 
 // ── Window & Tray globals ──────────────────────────────────────────────────
 let mainWindow = null;
 let tray = null;
-const PORT = 40880;
 
 // ── Wait for server to be ready ────────────────────────────────────────────
 function waitForServer(cb, retries = 20) {
-    http.get(`http://127.0.0.1:${PORT}/api/status`, (res) => {
+    const port = serverModule ? serverModule.getPort() : 40880;
+    http.get(`http://127.0.0.1:${port}/api/status`, (res) => {
         cb();
     }).on('error', () => {
         if (retries > 0) {
@@ -62,7 +79,8 @@ function createWindow() {
         mainWindow.show();
     });
 
-    mainWindow.loadURL(`http://127.0.0.1:${PORT}`);
+    const port = serverModule ? serverModule.getPort() : 40880;
+    mainWindow.loadURL(`http://127.0.0.1:${port}`);
 
     // Minimise to tray on close (keep engine running)
     mainWindow.on('close', (e) => {
@@ -117,6 +135,8 @@ function createTray() {
 
 // ── App lifecycle ──────────────────────────────────────────────────────────
 app.whenReady().then(() => {
+    if (!gotTheLock) return; // another instance already owns the app
+
     createTray();
 
     // Wait for the embedded HTTP server to be ready before showing the window
